@@ -28,13 +28,13 @@ class PerpustakaanController extends Controller
         return view('home');
     }
 
-    public function cari(Request $request)
-    {
-        $judul = $request->query('judul');
-        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+public function cari(Request $request)
+{
+    $judul = $request->query('judul');
+    $hasil = DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);
 
-        return response()->json($hasil);
-    }
+    return response()->json($hasil);
+}
     public function hapusRentan($buku)
 {
     app(\App\Http\Controllers\Api\ApiBukuController::class)->destroy($buku);

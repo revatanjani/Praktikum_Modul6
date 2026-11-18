@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
         ? redirect()->route('admin.dashboard')
         : (auth()->user()->hasRole('petugas') ? redirect()->route('petugas.dashboard') : redirect()->route('siswa.dashboard')))
         ->name('dashboard');
-    Route::get('/buku/{buku}/hapus', [PerpustakaanController::class, 'hapusRentan'])->name('buku.hapus.rentan');
+    
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
     Route::get('/profile', [ProfileController::class, 'edit'])->middleware('permission:lihat profil sendiri')->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->middleware('permission:ubah profil sendiri')->name('profile.update');

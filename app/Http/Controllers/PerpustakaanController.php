@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PerpustakaanController extends Controller
 {
@@ -20,8 +22,22 @@ class PerpustakaanController extends Controller
 
         return view('buku.detail', compact('buku'));
     }
+
     public function home()
+    {
+        return view('home');
+    }
+
+    public function cari(Request $request)
+    {
+        $judul = $request->query('judul');
+        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+
+        return response()->json($hasil);
+    }
+    public function hapusRentan($buku)
 {
-    return view('home');
+    app(\App\Http\Controllers\Api\ApiBukuController::class)->destroy($buku);
+    return redirect()->route('buku.index');
 }
 }

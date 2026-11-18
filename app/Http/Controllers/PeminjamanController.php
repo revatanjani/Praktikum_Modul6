@@ -90,4 +90,10 @@ class PeminjamanController extends Controller
 
         return redirect()->route('riwayat')->with('success', 'Riwayat peminjaman berhasil dihapus.');
     }
+    public function show($id)
+    {
+        $peminjaman = Peminjaman::with(['anggota', 'buku'])->findOrFail($id);
+
+        return view('peminjaman.show', compact('peminjaman'));
+    }
 }

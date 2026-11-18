@@ -137,7 +137,6 @@ async function muatBuku() {
                 <tr>
                     <td>${index + 1}</td>
                     <td>${aman(item.kategori)}</td>
-                    <td>${aman(item.judul)}</td>
                     <td>${aman(item.penulis)}</td>
                     <td>${aman(item.tahun_terbit)}</td>
                     ${punyaKolomAksi ? `<td class="aksi">${aksi}</td>` : ''}

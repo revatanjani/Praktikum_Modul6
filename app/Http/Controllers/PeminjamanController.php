@@ -90,9 +90,12 @@ class PeminjamanController extends Controller
 
         return redirect()->route('riwayat')->with('success', 'Riwayat peminjaman berhasil dihapus.');
     }
-    public function show($id)
+public function show($id)
     {
         $peminjaman = Peminjaman::with(['anggota', 'buku'])->findOrFail($id);
+
+        // Terapkan pengecekan otorisasi (mencegah IDOR)
+        \Illuminate\Support\Facades\Gate::authorize('view', $peminjaman);
 
         return view('peminjaman.show', compact('peminjaman'));
     }

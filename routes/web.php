@@ -57,4 +57,4 @@ Route::middleware('auth')->group(function () {
     Route::middleware('permission:kelola data pengguna')->group(function () {
         Route::view('/admin/pengguna', 'admin.pengguna')->name('admin.pengguna');
     });
-});
+}); 

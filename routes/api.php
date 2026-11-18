@@ -12,13 +12,13 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/buku/{buku}', [ApiBukuController::class, 'show'])
         ->middleware('permission:lihat daftar buku')->name('api.buku.show');
 
+    // Bagian yang diganti menggunakan Gate 'can:kelola-buku':
     Route::post('/buku', [ApiBukuController::class, 'store'])
-        ->middleware('permission:kelola data buku')->name('api.buku.store');
+        ->middleware('can:kelola-buku')->name('api.buku.store');
     Route::put('/buku/{buku}', [ApiBukuController::class, 'update'])
-        ->middleware('permission:kelola data buku')->name('api.buku.update');
+        ->middleware('can:kelola-buku')->name('api.buku.update');
     Route::patch('/buku/{buku}', [ApiBukuController::class, 'update'])
-        ->middleware('permission:kelola data buku')->name('api.buku.patch');
+        ->middleware('can:kelola-buku')->name('api.buku.patch');
     Route::delete('/buku/{buku}', [ApiBukuController::class, 'destroy'])
-        ->middleware('permission:kelola data buku')->name('api.buku.destroy');
-
-});
+        ->middleware('can:kelola-buku')->name('api.buku.destroy');
+}); 

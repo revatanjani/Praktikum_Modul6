@@ -28,9 +28,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->middleware('permission:lihat profil sendiri')->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->middleware('permission:ubah profil sendiri')->name('profile.update');
 
+    // Route pengelolaan buku menggunakan Gate 'can:kelola-buku'
+    Route::middleware('can:kelola-buku')->group(function () {
+        Route::get('/buku/create', [PerpustakaanController::class, 'index'])->name('buku.create');
+        Route::get('/admin/buku', [PerpustakaanController::class, 'index'])->name('admin.buku');
+    });
+
     Route::get('/buku', [PerpustakaanController::class, 'index'])->middleware('permission:lihat daftar buku')->name('buku.index');
     Route::get('/buku/{id}', [PerpustakaanController::class, 'detail'])->middleware('permission:lihat daftar buku')->name('buku.detail');
     Route::get('/buku-cari', [PerpustakaanController::class, 'cari'])->name('buku.cari');
+
     // Pengajuan peminjaman hanya diberikan kepada Siswa melalui permission.
     Route::post('/peminjaman', [PeminjamanController::class, 'store'])->middleware('permission:mengajukan peminjaman buku')->name('peminjaman.store');
 
@@ -51,10 +58,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/petugas/dashboard', [DashboardController::class, 'petugas'])->middleware('role:petugas')->name('petugas.dashboard');
     Route::get('/siswa/dashboard', [DashboardController::class, 'siswa'])->middleware('role:siswa')->name('siswa.dashboard');
 
-    Route::middleware('permission:kelola data buku')->group(function () {
-        Route::get('/admin/buku', [PerpustakaanController::class, 'index'])->name('admin.buku');
-    });
     Route::middleware('permission:kelola data pengguna')->group(function () {
         Route::view('/admin/pengguna', 'admin.pengguna')->name('admin.pengguna');
     });
-}); 
+});

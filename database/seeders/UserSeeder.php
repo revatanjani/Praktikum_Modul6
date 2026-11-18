@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         foreach ($accounts as $account) {
             $user = User::firstOrCreate(
                 ['email' => $account['email']],
-                ['name' => $account['name'], 'password' => Hash::make('AdminPerpus#2026')]
+                ['name' => $account['name'], 'password' => Hash::make('password')]
             );
             $user->syncRoles([$account['role']]);
 
